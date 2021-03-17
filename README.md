@@ -207,9 +207,10 @@ At this moment your should have:
 
 Now we should go back to our `Assets` folder and open `avalanche.js` file
 
-1. Replace `7e1a63f175cb00e327c6a161aee5fa39` to your API key
-2. Replace `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` to your Password from API
-3. Replace string
+1. Replace `<api_key>` to your API key
+2. Replace `<api_password>` to your Password from API
+3. Replace `<your_site_name>` to your real site name
+4. Replace string
 ```sh
 themes/120702304415/assets.json?asset[key]=config/settings_data.json
 ```
