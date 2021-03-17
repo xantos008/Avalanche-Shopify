@@ -252,7 +252,16 @@ So if you have different path for it, pls replace it on right one.
 <script src="{{ 'avalanche.js' | asset_url }}" async="async"></script>
 ```
 
-### Step 3 - Inset frame to your desired place
+### Step 3 - Paste customer detection code
+`Layouts` folder and click on every layout
+Paste to code between `<head>` and `</head>` tags
+```sh
+{% if customer %}
+<script>localStorage.setItem("customerId", {{customer.id}})</script>
+{% endif %}
+```
+
+### Step 4 - Inset frame to your desired place
 
 In code customization mode you can see folders like `Layouts`, `Teamplates` and `Sections` - default folders
 

@@ -1,32 +1,43 @@
 function getFrame(){
 	var element = document.getElementById('avalancheReferral');
-  	if(element && element.length > 0){
+  	if(element){
       	var email = localStorage.getItem('email') ? localStorage.getItem('email') : 'shared@shared.com';
 	    var firstName = localStorage.getItem('firstname') ? localStorage.getItem('firstname') : "shared";
 	    var lastName = localStorage.getItem('lastname') ? localStorage.getItem('lastname') : "shared";
       	var fullName = firstName + " " + lastName;
-  		element.innerHtml = "<iframe sandbox='allow-top-navigation allow-scripts allow-same-origin allow-forms' height='500px' width='100%' src='https://refer-ui-two.vercel.app/?email=" + email + "&name=" + fullname + "&token=" + token + "'></iframe>";
+      	var token = window.avalanche.token;
+  		document.getElementById("avalancheReferral").innerHTML = "<iframe sandbox='allow-top-navigation allow-scripts allow-same-origin allow-forms' height='500px' width='100%' src='https://refer-ui-two.vercel.app/?email=" + email + "&name=" + fullName + "&token=" + token + "'></iframe>";
   	}
 }
 
 function getCurrentUser (){
-  var xmlHttp = new XMLHttpRequest();
-
-  xmlHttp.open("get", "https://7e1a63f175cb00e327c6a161aee5fa39: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@amote1234.myshopify.com/admin/api/2021-01/users/current.json");
-  xmlHttp.setRequestHeader("Content-Type", "application/json");
-  xmlHttp.onload = function (data) {
-  var jsonResponse = JSON.parse(xmlHttp.response);
-    if(jsonResponse && jsonResponse.user && jsonResponse.user.email){
-    	localStorage.setItem('email', jsonResponse.user.email);
-    }
-    if(jsonResponse && jsonResponse.user && jsonResponse.user.first_name){
-    	localStorage.setItem('firstname', jsonResponse.user.first_name);
-    }
-    if(jsonResponse && jsonResponse.user && jsonResponse.user.last_name){
-    	localStorage.setItem('lastname', jsonResponse.user.last_name);
-    }
+  var customerId;
+  if(window.Shopify && window.Shopify.checkout && window.Shopify.checkout.customer_id){
+  	customerId = window.Shopify.checkout.customer_id;
+  } else {
+  	customerId = localStorage.getItem('customerId');
   }
-  xmlHttp.send();
+  if(customerId){
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open("get", "https://salty-reef-38656.herokuapp.com/events/shopifyConnection/?type=default&curUrl=https://4a3b10281f72037f99ed3dd2cf581eaf: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@hype-and-vice.myshopify.com/admin/api/2021-01/customers/" + customerId + ".json");
+    
+    xmlHttp.setRequestHeader("Content-Type", "application/json");
+    xmlHttp.onload = function (data) {
+    var jsonResponse = JSON.parse(xmlHttp.response);
+      console.log(jsonResponse);
+      if(jsonResponse && jsonResponse.data && jsonResponse.data.customer && jsonResponse.data.customer.email){
+          localStorage.setItem('email', jsonResponse.data.customer.email);
+      }
+      if(jsonResponse && jsonResponse.data && jsonResponse.data.customer && jsonResponse.data.customer.first_name){
+          localStorage.setItem('firstname', jsonResponse.data.customer.first_name);
+      }
+      if(jsonResponse && jsonResponse.data && jsonResponse.data.customer && jsonResponse.data.customer.last_name){
+          localStorage.setItem('lastname', jsonResponse.data.customer.last_name);
+      }
+    }
+    xmlHttp.send();
+  }
 }
 
 function rememmberMe(){
@@ -67,12 +78,13 @@ function rememmberMe(){
 function getToken(){
   var xmlHttp = new XMLHttpRequest();
 
-  xmlHttp.open("get", "https://7e1a63f175cb00e327c6a161aee5fa39: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@amote1234.myshopify.com/admin/api/2021-01/themes/120702304415/assets.json?asset[key]=config/settings_data.json");
+ 
+  xmlHttp.open("get", " https://salty-reef-38656.herokuapp.com/events/shopifyConnection/?type=asset_key&curUrl=https://4a3b10281f72037f99ed3dd2cf581eaf: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@hype-and-vice.myshopify.com/admin/api/2021-01/themes/84177748073/assets.json&queryfile=config/settings_data.json");
   xmlHttp.setRequestHeader("Content-Type", "application/json");
 
   xmlHttp.onload = function (data) {
     var jsonResponse = JSON.parse(xmlHttp.response);
-    var json = JSON.parse(jsonResponse.asset.value);
+    var json = JSON.parse(jsonResponse.data.asset.value);    
     var avalancheToken = json.current.avalanche_token;
     var avalancheLiveToken = json.current.avalanche_live_token;
 
@@ -91,6 +103,13 @@ function getToken(){
           firstname_field: json.current.avalanche_firstname_field,
           lastname_field: json.current.avalanche_lastname_field
         }
+        localStorage.setItem('token', token.token);
+        localStorage.setItem('baseUrl', json.current.avalanche_site_base_url);
+        localStorage.setItem('redirectUrl', json.current.avalanche_site_redirect);
+        localStorage.setItem('premiumUrl', json.current.avalanche_site_premium_url);
+        localStorage.setItem('email_field', json.current.avalanche_email_field);
+        localStorage.setItem('firstname_field', json.current.avalanche_firstname_field);
+        localStorage.setItem('lastname_field', json.current.lastname_field);
       }
       xhr.send();
 
@@ -102,13 +121,14 @@ function getToken(){
 getToken();
 var getAvalancheData = setInterval(avData, 1000);
 function avData (){
+  console.log('adasdasdasd');
   if(window.avalanche && window.avalanche.token && window.avalanche.token.length > 50){
-  	clearInterval(getAvalancheData);
     getFrame();
     rememmberMe();
     getFrame();
     confirmedUserRef();
     setPremiumEvent();
+    clearInterval(getAvalancheData);
   }
 }
 
@@ -122,24 +142,10 @@ function rememmberReferral (){
 
 function setPremiumEvent (skipUrl = false){
     const data = {
-      'email': localStorage.getItem('email');
+      'email': localStorage.getItem('email')
     };
   	const token = window.avalanche.token;
-  
-    if(skipUrl){
-		var xhr = new XMLHttpRequest();
-
-        xhr.open("post", "https://salty-reef-38656.herokuapp.com/events/premium_event");
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Authorization", token);
-
-        xhr.onload = function () {
-          console.log('Set premium event response: ', xhr.response);
-        }
-        xhr.send(data);  
-    } else {
-      const curUrl = window.location.href.split(window.avalanche.premiumUrl);
-      if(curUrl && curUrl.length > 1){
+      if(skipUrl){
           var xhr = new XMLHttpRequest();
 
           xhr.open("post", "https://salty-reef-38656.herokuapp.com/events/premium_event");
@@ -149,9 +155,22 @@ function setPremiumEvent (skipUrl = false){
           xhr.onload = function () {
             console.log('Set premium event response: ', xhr.response);
           }
-          xhr.send(data); 
+          xhr.send(data);  
+      } else {
+        const curUrl = window.location.href.split(window.avalanche.premiumUrl);
+        if(curUrl && curUrl.length > 1){
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("post", "https://salty-reef-38656.herokuapp.com/events/premium_event");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", token);
+
+            xhr.onload = function () {
+              console.log('Set premium event response: ', xhr.response);
+            }
+            xhr.send(data); 
+        }
       }
-    }
 }
 
 function confirmedUserRef(email = null){
@@ -193,7 +212,6 @@ function getEmailReferrer(){
  	}
     
 }
-setPremiumEvent();
 getCurrentUser();
 rememmberReferral();
 getEmailReferrer();
