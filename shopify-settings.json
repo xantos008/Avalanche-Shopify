@@ -1,0 +1,16 @@
+{
+	"avalanche_client_id": "RHSOzOtmIhqmZZO1DjlsVW8eA18fMgZT",
+    "avalanche_client_secret": "wgz5FdJBYcQGy5joooLx43gfMcUHXtt8oU9aDCBvtUEwDYPKzvO8ODZR-IpCYGLD",
+    "avalanche_token": "",
+    "avalanche_live_token": "",
+    "avalanche_audience": "https:\/\/useavalanche.us.auth0.com\/api\/v2\/",
+    "avalanche_grant_type": "client_credentials",
+    "avalanche_oauth_url": "https:\/\/useavalanche.us.auth0.com\/oauth\/token",
+    "avalanche_referapp_api_url": "http:\/\/salty-reef-38656.herokuapp.com",
+    "avalanche_site_base_url": "https:\/\/www.hypeandvice.com\/",
+    "avalanche_site_redirect": "https:\/\/www.hypeandvice.com\/",
+    "avalanche_site_premium_url": "https:\/\/www.hypeandvice.com\/premium-event",
+    "avalanche_email_field": "checkout_email",
+    "avalanche_firstname_field": "checkout_shipping_address_first_name",
+    "avalanche_lastname_field": "checkout_shipping_address_last_name",
+}
