@@ -138,8 +138,8 @@ function setPremiumEvent (skipUrl = false){
         }
         xhr.send(data);  
     } else {
-      const curUrl = window.location.href.split('?')[0];
-      if(curUrl == window.avalanche.premiumUrl){
+      const curUrl = window.location.href.split(window.avalanche.premiumUrl);
+      if(curUrl && curUrl.length > 1){
           var xhr = new XMLHttpRequest();
 
           xhr.open("post", "https://salty-reef-38656.herokuapp.com/events/premium_event");
