@@ -20,12 +20,11 @@ function getCurrentUser (){
   if(customerId){
     var xmlHttp = new XMLHttpRequest();
 
-    xmlHttp.open("get", "https://salty-reef-38656.herokuapp.com/events/shopifyConnection/?type=default&curUrl=https://4a3b10281f72037f99ed3dd2cf581eaf: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@hype-and-vice.myshopify.com/admin/api/2021-01/customers/" + customerId + ".json");
+    xmlHttp.open("get", "https://salty-reef-38656.herokuapp.com/events/shopifyConnection/?type=default&curUrl=https://<api_key>:<api_password>@<your_site_name>.myshopify.com/admin/api/2021-01/customers/" + customerId + ".json");
     
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.onload = function (data) {
     var jsonResponse = JSON.parse(xmlHttp.response);
-      console.log(jsonResponse);
       if(jsonResponse && jsonResponse.data && jsonResponse.data.customer && jsonResponse.data.customer.email){
           localStorage.setItem('email', jsonResponse.data.customer.email);
       }
@@ -79,7 +78,7 @@ function getToken(){
   var xmlHttp = new XMLHttpRequest();
 
  
-  xmlHttp.open("get", " https://salty-reef-38656.herokuapp.com/events/shopifyConnection/?type=asset_key&curUrl=https://4a3b10281f72037f99ed3dd2cf581eaf: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@hype-and-vice.myshopify.com/admin/api/2021-01/themes/84177748073/assets.json&queryfile=config/settings_data.json");
+  xmlHttp.open("get", " https://salty-reef-38656.herokuapp.com/events/shopifyConnection/?type=asset_key&curUrl=https://<api_key>:<api_password>@<your_site_name>.myshopify.com/admin/api/2021-01/themes/84177748073/assets.json&queryfile=config/settings_data.json");
   xmlHttp.setRequestHeader("Content-Type", "application/json");
 
   xmlHttp.onload = function (data) {
