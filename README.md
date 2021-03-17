@@ -21,11 +21,13 @@ On the opened page click _Create new private app_
 > If you alredy have created app, you have your api and api creditentials. Go to step 2
 
 So after you will be on page `https://<your-app-link>/admin/apps/private/new`
+
 Fill form fields
 
 ##### App information
 
 `Private app name` - Any name of your API, we name it `Avalanche Referral System`
+
 `Emergency developer email` - set your real email
 
 ##### Admin API
@@ -33,37 +35,69 @@ Fill form fields
 Click on `Show inactive Admin API permissions` to explode API permissions
 
 `Assigned fulfillment orders` - Read and write
+
 `Customers` - Read and write
+
 `Draft orders` - Read and write
+
 `Fulfillment services` -Read and write
+
 `Online Store pages` -Read and write
+
 `Order editing` - Read and write
+
 `Orders` - Read and write
+
 `Reports` - Read and write
+
 `Resource feedback` - Read and write
+
 `Script tags` - Read and write
+
 `Shipping` - Read and write
+
 `Shopify Payments accounts` - Read access
+
 `Shopify Payments bank accounts` - Read access
+
 `Shopify Payments disputes` - Read access
+
 `Shopify Payments payouts` - Read access
+
 `Store content` - Read and write
+
 `Themes` - set your real email
+
 `Third-party fulfillment orders` - set your real email
+
 `Analytics` - No access
+
 `Discounts` - No access
+
 `GDPR data requests` - No access
+
 `Gift cards` - No access
+
 `Inventory` - No access
+
 `Kit Skills` - No access
+
 `Legal policies` - No access
+
 `Locations` - No access
+
 `Marketing events` - No access
+
 `Merchant-managed fulfillment orders` - No access
+
 `Price rules` - No access
+
 `Product listings` - No access
+
 `Products` - No access
+
 `Shop locale` - No access
+
 `Translations` - No access
 
 ##### Webhook API version
@@ -158,7 +192,9 @@ Now we need to config your environment variables
 ```
 Where 
 `avalanche_email_field` - your cart field's id for email
+
 `avalanche_firstname_field` - your cart field's id for first name
+
 `avalanche_lastname_field` - your cart field's id for last name
 
 5. Click on `Save` button
